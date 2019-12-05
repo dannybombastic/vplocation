@@ -1,0 +1,14 @@
+[Unit]
+Description=My Script Service
+After=network.target network-online.target
+Requires=network-online.target
+
+
+
+[Service]
+User=daniel
+ExecStart=/usr/bin/python3.6 /srv/vplocation/vozplus_location.py > /var/log/logy.log
+
+[Install]
+WantedBy=multi-user.target
+

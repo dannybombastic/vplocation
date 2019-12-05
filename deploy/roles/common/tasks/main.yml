@@ -1,0 +1,76 @@
+---
+- name: Instalacion del localizador no GPs
+  hosts: ubuntu
+ 
+  vars:                                                                # varibles necesarias
+    main_folder: /srv/
+    subdir: vplocation
+    systemd: vplocation.service
+    systemd_folder: /lib/systemd/system/
+    core: ../files/content/
+    file_service: ../files/content/core/
+    journal: /var/log/journal/vplocation/
+
+
+  tasks:                                                  # instalamos librerias necesarias para usar dbus-python
+    - name: install libdbus basic packages 1
+      become: true
+      become_method: sudo     
+      apt:
+        name: '{{ item }}'
+        state: absent
+        force_apt_get: yes
+      with_items:
+           - libdbus-glib-1-dev libdbus-1-dev    
+      tags: "1" 
+
+                                               # creamos carpetas necesarias par la installacion   
+    - name: create project subdirectories 2
+      file:
+        path: '{{ main_folder }}{{ subdir }}'
+        state: directory
+      tags: "2" 
+                                                              # copiamos la aplicacion entera
+    - name: copying files 3
+      become: true 
+      command: 'cp -r {{ core }} {{ main_folder }}{{ subdir }}'
+      tags: "3" 
+
+                                                         # copiamos el archivo de systemd al sistema, 
+    - name: copying to systemd 4
+      copy:
+        src: '{{ file_service }}{{ systemd }}'
+        dest: '{{ systemd_folder }}'
+      tags: "4"   
+     
+                 # Recargamos daemon local encargado de los registros de los servicios de systema, y registramos nuestro service al boot del systema y le damos permisos
+    - name: user push
+      become: true
+      become_method: sudo 
+      command: useradd -r -s /bin/false vplocation
+      tags: "5"
+ 
+    - name: own permision and group
+      file: path=/lib/systemd/system/vplocation.service owner=vplocation group=root mode=754 state=file
+      tags: "6" 
+    
+    - name: own permision and group
+      file: path=/srv/vplocation/ owner=vplocation group=root mode=754 state=directory recurse=yes
+      tags: "7" 
+
+    - name: Daemon reload of systemd, and load service into the system and give it the rigth permission 5 
+      become: true
+      become_method: sudo 
+      command: '{{ item }}'
+      with_items:
+        - chmod 777 {{ systemd_folder }}{{ systemd }} 
+        - systemctl daemon-reload
+        - systemctl enable {{ systemd }}
+        - 'chown vplocation {{ systemd_folder }}{{ systemd }}' 
+      tags: "8"
+  
+
+
+    
+
+          

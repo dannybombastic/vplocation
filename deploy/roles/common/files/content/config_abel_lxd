@@ -1,0 +1,62 @@
+config:
+  core.https_address: '[::]:8443'
+  core.trust_password: true
+api_extensions:
+- id_map
+- id_map_base
+- resource_limits
+api_status: stable
+api_version: "1.0"
+auth: trusted
+auth_methods: []
+public: false
+environment:
+  addresses:
+  - 192.168.150.85:8443
+  - 192.168.122.1:8443
+  architectures:
+  - x86_64
+  - i686
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    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
+    -----END CERTIFICATE-----
+  certificate_fingerprint: 8beffade653ace136d262ba10c1bc0608798e3306e23da7c0ffea41fd3a1e6e3
+  driver: lxc
+  driver_version: 2.0.8
+  kernel: Linux
+  kernel_architecture: x86_64
+  kernel_version: 4.15.0-33-generic
+  server: lxd
+  server_pid: 2326
+  server_version: 2.0.11
+  storage: dir
+  storage_version: ""
