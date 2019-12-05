@@ -33,7 +33,7 @@ setuptools.setup(
         'pbkdf2==1.3',
         'PyRIC==0.1.6.3',
         'python-networkmanager==2.1',
-        'requests==2.19.1',
+        'requests==2.20.0',
         'six==1.11.0',
         'SQLAlchemy==1.2.8',
         'termcolor==1.1.0',
