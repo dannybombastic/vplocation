@@ -37,7 +37,7 @@ setuptools.setup(
         'six==1.11.0',
         'SQLAlchemy==1.2.8',
         'termcolor==1.1.0',
-        'urllib3==1.23',
+        'urllib3==1.26.5',
         'wifi==0.3.8',
     ],
 )
