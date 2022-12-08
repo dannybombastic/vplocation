@@ -24,7 +24,7 @@ setuptools.setup(
     packages=['vplocation'],
     zip_safe=False,
     install_requires=[
-        'certifi==2018.4.16',
+        'certifi==2022.12.7',
         'chardet==3.0.4',
         'coverage==5.0a1',
         'dbus-python==1.2.8',
